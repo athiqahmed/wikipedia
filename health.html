@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALPHAFIT-360 - Complete Site</title>
+    <script>
+        let secretWeight = Math.ceil(Math.random() * 100) + 1; // Random weight between 1 and 100
+
+        function checkWeight() {
+            let userInput = document.getElementById('weightInput').value;
+            let messageElement = document.getElementById('message');
+
+            if (!userInput) {
+                messageElement.textContent = "Heyy Nasty enter a valid weight!!!";
+                messageElement.style.color = "red";
+                return;
+            }
+
+            let guessedWeight = parseInt(userInput, 10);
+
+            if (guessedWeight < secretWeight) {
+                messageElement.textContent = "Hey Skinny - Too light! (Try a heavier weight).";
+                messageElement.style.color = "orange";
+            } else if (guessedWeight > secretWeight) {
+                messageElement.textContent = "Hey Fattyy - Too heavy! (Try a lighter weight).";
+                messageElement.style.color = "orange";
+            } else {
+                messageElement.textContent = "Hurrayy Fitty - Congratulations! You've found the safe weight!";
+                messageElement.style.color = "green";
+            }
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            const navLinks = document.querySelectorAll("nav ul li label");
+            const menuToggle = document.getElementById("menu-toggle");
+
+            navLinks.forEach(link => {
+                link.addEventListener("click", () => {
+                    menuToggle.checked = false; // Unchecks the checkbox to hide the menu
+                });
+            });
+        });
+        // NEW: FORM VALIDATION LOGIC
+        function validateAndRedirect(event) {
+    const name = document.getElementById('name').value;
+    const age = document.getElementById('age').value;
+    const gender = document.getElementById('gender').value;
+    const height = document.getElementById('height').value;
+    const weight = document.getElementById('weight').value;
+    const healthIssue = document.getElementById('health_issue').value;
+
+    // Check each field individually
+    if (!name) {
+        alert("Please enter your Full Name.");
+        event.preventDefault();
+        return false;
+    }
+    if (!age) {
+        alert("Please enter your Age.");
+        event.preventDefault();
+        return false;
+    }
+    if (!gender) {
+        alert("Please select your Gender.");
+        event.preventDefault();
+        return false;
+    }
+    if (!height) {
+        alert("Please enter your Height.");
+        event.preventDefault();
+        return false;
+    }
+    if (!weight) {
+        alert("Please enter your Weight.");
+        event.preventDefault();
+        return false;
+    }
+    // Optional: Only alert if you want the Health Issue field to be mandatory
+    if (!healthIssue) {
+        alert("Please enter existing health issues (or type 'None').");
+        event.preventDefault();
+        return false;
+    }
+
+    // If all checks pass, the page will switch to the Precaution section
+    return true;
+}
+    </script>
+
+    <style>
+        /* --- Core Theme & Reset --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            font-style: italic; 
+            color: #f0f0f0; 
+            background-color: #111111; 
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* --- Backgrounds (Page-Specific) --- */
+
+        /* Diet Page Background */
+        #diet-radio:checked ~ #page-wrapper {
+            background-image: url('healthy-foods-bg.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #111111; 
+        }
+
+        /* About Page Background */
+        #about-radio:checked ~ #page-wrapper {
+            background-image: url('team-working-bg.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #111111; 
+        }
+
+        /* Workout Page Background */
+        #workout-radio:checked ~ #page-wrapper {
+            background-image: url('gym-workout-bg.jpg'); /* Assume a workout-themed image; replace with actual URL */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #111111; 
+        }
+        /* Game Page Background */
+        #game-radio:checked ~ #page-wrapper {
+            background-image: url('game-bg.jpg'); /* Assume a game-themed image; replace with actual URL */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #111111; 
+        }
+        /* Dark overlay for readability (applies when diet, about, precaution, or workout radio is checked) */
+        #diet-radio:checked ~ #page-wrapper::before,
+        #about-radio:checked ~ #page-wrapper::before,
+        #precaution-radio:checked ~ #page-wrapper::before,
+        #workout-radio:checked ~ #page-wrapper::before,
+        #game-radio:checked ~ #page-wrapper::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.65);
+            z-index: -1; 
+        }
+
+        /* --- Global Container --- */
+        .container {
+            width: 85%;
+            margin: auto;
+            overflow: hidden;
+            max-width: 1200px;
+        }
+        
+        /* --- Navigation & Header --- */
+
+        /* Radio buttons and checkbox for mobile menu control */
+        .radio-control, .menu-toggle {
+            display: none;
+        }
+
+        header {
+            background: #1e1e1e;
+            padding: 15px 0;
+            border-bottom: 3px solid #00c6ff; 
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.5em; text-shadow: 0 0 12px rgba(0, 198, 255, 0.8); 
+            color: #00c6ff; 
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Navigation Links (using label for radio control) */
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 10px;
+        }
+        
+        nav ul li label {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 10px;
+            transition: color 0.3s, background-color 0.3s;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            font-style: normal;
+        }
+        
+        /* Highlight active link based on radio button state */
+        #home-radio:checked ~ #page-wrapper header .home-link,
+        #diet-radio:checked ~ #page-wrapper header .diet-link,
+        #about-radio:checked ~ #page-wrapper header .about-link,
+        #workout-radio:checked ~ #page-wrapper header .workout,
+        #precaution-radio:checked ~ #page-wrapper header .precaution,
+        #game-radio:checked ~ #page-wrapper header .game {
+            color: #111111;
+            background-color: #00c6ff;
+        }
+
+        nav ul li label:hover {
+            background-color: #0099cc;
+        }
+
+        /* --- Page Content Control (The CSS Switch) --- */
+        #page-wrapper {
+            transition: background-color 0.5s, background-image 0.5s;
+        }
+        
+        /* Hide all content sections by default */
+        #home-content, #diet-content, #about-content, #precaution-content, #workout-content, #game-content {
+            display: none;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        /* Show the active section based on the checked radio button */
+        #home-radio:checked ~ #page-wrapper #home-content { display: block; }
+        #diet-radio:checked ~ #page-wrapper #diet-content { display: block; }
+        #about-radio:checked ~ #page-wrapper #about-content { display: block; }
+        #precaution-radio:checked ~ #page-wrapper #precaution-content { display: block; }
+        #workout-radio:checked ~ #page-wrapper #workout-content { display: block; }
+        #game-radio:checked ~ #page-wrapper #game-content { display: block; }
+        
+        /* --- HOME CONTENT STYLES --- */
+        #home-content h2 { margin-bottom: 20px; color: #00c6ff; font-size: 2.5em; text-shadow: 0 0 12px rgba(0, 198, 255, 0.8); }
+        #home-content p { font-size: 1.1em; margin-bottom: 30px; color: #ccc; }
+        .health-form { background: #1e1e1e; padding: 30px; border-radius: 10px; max-width: 400px; width: 90%; margin: 30px auto; transform: translateY(-5px); box-shadow: 0 5px 25px rgba(0, 198, 255, 0.5);text-align: left; }
+        .health-form label { display: block; margin-top: 15px; margin-bottom: 5px; font-weight: bold; color: #ccc; }
+        .health-form input[type="text"], .health-form input[type="number"], .health-form select, .health-form textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #444; border-radius: 5px; background-color: #333; color: #f0f0f0; font-size: 1em; }
+        .health-form textarea { resize: vertical; min-height: 80px; }
+        .health-form button { display: block; width: 100%; padding: 12px; margin-top: 20px; background: #00c6ff; color: #111111; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; font-weight: bold; transition: background-color 0.3s; }
+        .health-form button:hover { background: #0099cc; }
+        
+        /* FIX: Change submit button behavior from form action to page change */
+        #home-content button[type="submit"] { display: none; }
+        
+        /* Custom button that links to the PRECAUTION page */
+        #home-content .precaution-button {
+            display: block; 
+            text-align: center;
+            width: 100%;
+            padding: 12px; 
+            margin-top: 20px; 
+            background: #00c6ff; 
+            color: #111111; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-size: 1.1em; font-weight: bold; 
+            transform: translateY(-5px); box-shadow: 0 5px 25px rgba(0, 198, 255, 0.6);
+            font-style: italic;
+        }
+
+
+        /* --- DIET CONTENT STYLES (Individual Sections) --- */
+        #diet-content h2 { margin-bottom: 20px; color: #00c6ff; font-size: 2.2em; text-shadow: 0 0 10px rgba(0, 198, 255, 0.7); }
+        #diet-content p.intro-diet { margin-bottom: 30px; color: #ccc; font-size: 1.1em; max-width: 800px; margin-left: auto; margin-right: auto; }
+
+        .nutrient-section { background: rgba(30, 30, 30, 0.95); padding: 25px; border-radius: 10px; margin: 30px auto; max-width: 800px; text-align: left; box-shadow: 0 0 15px rgba(0, 198, 255, 0.4); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .nutrient-section:hover { transform: translateY(-5px); box-shadow: 0 5px 25px rgba(0, 198, 255, 0.6); }
+        .nutrient-section h3 { color: #00c6ff; font-size: 1.8em;text-shadow: 0 0 10px rgba(0, 198, 255, 0.7); margin-bottom: 10px; border-bottom: 2px solid #333; padding-bottom: 5px; }
+        .nutrient-section h4 { color: #e0e0e0; font-size: 1.3em; margin-top: 15px; margin-bottom: 8px; }
+        .nutrient-section p { color: #ccc; margin-bottom: 10px; font-size: 1em; line-height: 1.5; font-style: normal; }
+        .nutrient-section ul { list-style: none; padding-left: 0; margin-bottom: 15px; }
+        .nutrient-section ul li { margin-bottom: 5px; position: relative; padding-left: 20px; font-style: normal; }
+        .nutrient-section ul li::before { content: "\2022"; color: #00c6ff; font-weight: bold; display: inline-block; width: 1em; margin-left: -1em; font-style: normal; }
+        .nutrient-image { width: 100%; max-width: 250px; height: auto; border-radius: 8px; margin: 15px auto; display: block; box-shadow: 0 0 10px rgba(0, 198, 255, 0.4); object-fit: cover; }
+
+
+        /* --- PRECAUTION CONTENT STYLES --- */
+        #precaution-content h2 { margin-bottom: 20px; color: #00c6ff; font-size: 2.5em; text-shadow: 0 0 12px rgba(0, 198, 255, 0.8); }
+        .precaution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+        .precaution-card:hover{
+            transform: translateY(-5px); box-shadow: 0 5px 25px rgba(0, 198, 255, 0.6);
+        }
+        .precaution-card {
+            background: rgba(30, 30, 30, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            border-left: 5px solid #00c6ff;
+            font-style: normal;
+        }
+        .precaution-card h3 {
+            color: #ff5555;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+        .precaution-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .precaution-card ul li {
+            margin-bottom: 8px;
+            padding-left: 10px;
+            position: relative;
+        }
+        .precaution-card ul li::before {
+            content: "\2713"; /* Checkmark symbol */
+            color: #00c6ff;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+
+        /* --- ABOUT US CONTENT STYLES --- */
+        #about-content h2 { color: #00c6ff; font-size: 2.5em; text-shadow: 0 0 12px rgba(0, 198, 255, 0.8); }
+        #about-content p.intro { margin-bottom: 40px; color: #ccc; font-size: 1.2em; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 50px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .team-member { background: rgba(30, 30, 30, 0.95); padding: 25px; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 198, 255, 0.3); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .team-member:hover { transform: translateY(-5px); box-shadow: 0 5px 25px rgba(0, 198, 255, 0.5); }
+        .member-photo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid #00c6ff; box-shadow: 0 0 10px rgba(0, 198, 255, 0.6); }
+        .team-member h3 { color: #00c6ff; font-size: 1.6em;text-shadow: 0 0 10px rgba(0, 198, 255, 0.7); margin-bottom: 5px; }
+        .team-member p.role { color: #aaa; font-size: 1.1em; margin-bottom: 15px; }
+        .team-member p.bio { color: #e0e0e0; font-size: 0.95em; line-height: 1.5; }
+
+        /* --- WORKOUT CONTENT STYLES --- */
+        #workout-content h2 { margin-bottom: 20px; color: #00c6ff; font-size: 2.5em; text-shadow: 0 0 12px rgba(0, 198, 255, 0.8); }
+        #workout-content p.intro { margin-bottom: 30px; color: #ccc; font-size: 1.1em; max-width: 800px; margin-left: auto; margin-right: auto; }
+
+        .workout-section { 
+            background: rgba(30, 30, 30, 0.95); 
+            padding: 25px; 
+            border-radius: 10px; 
+            margin: 30px auto; 
+            max-width: 800px; 
+            text-align: left; 
+            box-shadow: 0 0 15px rgba(0, 198, 255, 0.4); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            border-left: 5px solid #00c6ff;
+        }
+        .workout-section:hover { transform: translateY(-5px); box-shadow: 0 5px 25px rgba(0, 198, 255, 0.6); }
+        .workout-section h3 { 
+            color: #00c6ff; 
+            font-size: 1.8em; 
+            text-shadow: 0 0 10px rgba(0, 198, 255, 0.7); 
+            margin-bottom: 15px; 
+            border-bottom: 2px solid #333; 
+            padding-bottom: 5px; 
+        }
+        .workout-section .intro { 
+            color: #e0e0e0; 
+            font-size: 1.1em; 
+            margin-bottom: 20px; 
+            font-style: normal; 
+        }
+        .workout-section h4 { 
+            color: #00c6ff; 
+            font-size: 1.3em; 
+            margin-top: 15px; 
+            margin-bottom: 10px; 
+        }
+        .workout-section p, .workout-section li { 
+            color: #ccc; 
+            margin-bottom: 10px; 
+            font-size: 1em; 
+            line-height: 1.5; 
+            font-style: normal; 
+        }
+        .workout-section ul { 
+            list-style: none; 
+            padding-left: 0; 
+            margin-bottom: 15px; 
+        }
+        .workout-section ul li { 
+            margin-bottom: 8px; 
+            position: relative; 
+            padding-left: 20px; 
+        }
+        .workout-section ul li::before { 
+            content: "\2022"; 
+            color: #00c6ff; 
+            font-weight: bold; 
+            display: inline-block; 
+            width: 1em; 
+            margin-left: -1em; 
+        }
+        .workout-section .tips { 
+            background: rgba(0, 198, 255, 0.1); 
+            padding: 15px; 
+            border-radius: 5px; 
+            border-left: 3px solid #00c6ff; 
+        }
+        .workout-section .variations ul { 
+            padding-left: 20px; 
+            list-style-type: disc; 
+        }
+        .workout-section .motivational { 
+            font-style: italic; 
+            color: #00c6ff; 
+            font-size: 1.1em; 
+            text-align: center; 
+            margin-top: 20px; 
+            padding: 15px; 
+            background: rgba(0, 198, 255, 0.05); 
+            border-radius: 5px; 
+        }
+
+        /* --- GAME CONTENT STYLES --- */
+        #game-content h1 { margin-bottom: 20px; color: #00c6ff; font-size: 2.5em; text-shadow: 0 0 12px rgba(0, 198, 255, 0.8); }
+        #game-content p { font-size: 1.1em; margin-bottom: 30px; color: #ccc; max-width: 800px; margin-left: auto; margin-right: auto; }
+        #game-content input[type="number"] { width: 100%; max-width: 300px; padding: 10px; margin-bottom: 15px; border: 1px solid #444; border-radius: 5px; background-color: #333; color: #f0f0f0; font-size: 1em; }
+        #game-content button { padding: 12px 25px; background: #00c6ff; color: #111111; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; font-weight: bold; transition: background-color 0.3s; font-style: normal; }
+        #game-content button:hover { background: #0099cc; box-shadow: 0 5px 25px rgba(0, 198, 255, 0.6);}
+        #game-content h2 { margin-bottom: 10px; color: #00c6ff; font-size: 2em; text-shadow: 0 0 10px rgba(0, 198, 255, 0.7); }
+        #message { margin-top: 20px; font-size: 1.2em; min-height: 40px; }
+        .game-container {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        /* Go Back Button Styling */
+        .go-back-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            margin-top: 30px;
+            background: #00c6ff;
+            color: #111111;
+                        ;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-style: normal;
+            cursor: pointer;
+        }
+        
+        .go-back-btn:hover {
+            background: #0099cc;
+            transform: translateY(-5px); box-shadow: 0 5px 25px rgba(0, 198, 255, 0.6);
+        }
+
+        
+        /* --- Footer --- */
+        footer {
+            background: rgba(30, 30, 30, 0.9);
+            color: #aaa;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 50px;
+            border-top: 1px solid #333;
+            z-index: 100; 
+            position: relative;
+
+        }
+        
+        /* ======================================= */
+        /* MOBILE RESPONSIVENESS (Media Queries) */
+        /* ======================================= */
+        
+        .menu-toggle, .menu-label { display: none; }
+
+        @media (max-width: 768px) { 
+            /* Navigation Styles */
+            .menu-label { 
+                display: block; color: #00c6ff; font-size: 30px; cursor: pointer;
+                position: absolute; top: 10px; right: 5%; z-index: 20; line-height: 1;
+            }
+            nav {
+                max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out;
+                width: 100%; background: #111111; position: absolute; top: 53px; left: 0; z-index: 15;
+            }
+            nav ul { flex-direction: column; padding: 10px 0; text-align: center; width: 100%; }
+            nav ul li { margin: 0; border-bottom: 1px solid #333; }
+            nav ul li:last-child { border-bottom: none; }
+            nav ul li label { padding: 15px; width: 100%; }
+            .menu-toggle:checked ~ nav { max-height: 400px; }
+            .container { width: 95%; }
+            header .container { justify-content: flex-start; align-items: center; }
+            
+            /* Team Grid Mobile */
+            .team-grid {
+                grid-template-columns: 1fr; 
+                max-width: 400px; 
+            }
+            /* Precaution Grid Mobile */
+            .precaution-grid {
+                grid-template-columns: 1fr;
+            }
+            /* Nutrient Image Mobile */
+            .nutrient-image {
+                max-width: 80%;
+            }
+            /* Workout Section Mobile */
+            .workout-section {
+                max-width: 95%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <input type="radio" name="page" id="home-radio" class="radio-control" checked>
+    <input type="radio" name="page" id="diet-radio" class="radio-control">
+    <input type="radio" name="page" id="about-radio" class="radio-control">
+    <input type="radio" name="page" id="precaution-radio" class="radio-control">
+    <input type="radio" name="page" id="workout-radio" class="radio-control">
+    <input type="radio" name="page" id="game-radio" class="radio-control">
+    <div id="page-wrapper">
+        <header>
+            <div class="container">
+                <div class="logo">ALPHAFIT-360</div>
+                
+                <input type="checkbox" id="menu-toggle" class="menu-toggle">
+                <label for="menu-toggle" class="menu-label">&#9776;</label>
+
+                <nav>
+                    <ul>
+                        <li><label for="home-radio" class="home-link">Home</label></li>
+                        <li><label for="diet-radio" class="diet-link">Balanced Diet</label></li> 
+                        <li><label for="workout-radio" class="workout">Workout</label></li>
+                        <li><label for="game-radio" class="game">Game</label></li>
+                        <li><label for="about-radio" class="about-link">About Us</label></li> 
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div id="home-content" class="container">
+            <h2>Start Your Personalized Fitness Plan</h2>
+            <p>Enter your details below to get a head start on your ALPHAFIT-360 journey.</p>
+
+            <form class="health-form"> 
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Your Name" required>
+
+                <label for="age">Age (Years)</label>
+                <input type="number" id="age" placeholder="e.g., 30" min="1" max="100" required>
+
+                <label for="gender" placeholder="Select your gender">Gender</label>
+                <select id="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="height">Height (in cm)</label>
+                <input type="number" id="height" placeholder="e.g., 175" min="50" max="250" required>
+
+                <label for="weight">Weight (in kgs)</label>
+                <input type="number" id="weight" placeholder="e.g., 75" min="10" max="300" required>
+                
+                <label for="health_issue">Existing Health Issues (Optional)</label>
+                <textarea id="health_issue" placeholder="e.g., High Blood Pressure, Joint Pain, Diabetes, etc." required></textarea>
+                
+                <label for="precaution-radio" class="precaution-button diet-button" onclick="validateAndRedirect(event)">Submit & Calculate</label>
+                <button type="submit" onclick="submitcal()">Submit & Calculate</button>
+
+            </form>
+            <p id="submitText"></p>
+        </div>
+
+
+        <div id="diet-content" class="container">
+            <h2>Understanding Essential Nutrients 📚</h2>
+            <p class="intro-diet">Discover the vital roles carbohydrates, proteins, fats, vitamins, and minerals play in maintaining your health and boosting your fitness.</p>
+
+            <div class="nutrient-section">
+                <h3 >Carbohydrates: Your Primary Energy Source</h3>
+                <p>Carbohydrates are the body's main source of energy. They are broken down into glucose, which is used for immediate energy or stored for later use. Essential for brain function, muscle activity, and organ health.</p>
+                <img src="https://images.squarespace-cdn.com/content/v1/5ea8287254c2e00f35d1cc48/1588850313865-CRV15NF24DBH25CZGG92/carbs+are+not+the+enemy" alt="Whole grains, fruits, and vegetables representing carbohydrates" class="nutrient-image">
+                <h4>Types & Sources:</h4>
+                <ul>
+                    <li>**Simple Carbs:** Sugars found in fruits, milk, and processed foods. Provide quick energy.</li>
+                    <li>**Complex Carbs:** Starches and fiber found in whole grains, vegetables, and legumes. Provide sustained energy and are rich in fiber.</li>
+                </ul>
+                <h4>Importance:</h4>
+                <ul>
+                    <li>Fuels daily activities and exercise.</li>
+                    <li>Supports brain function and mood.</li>
+                    <li>Fiber-rich carbs aid digestion and gut health.</li>
+                </ul>
+            </div>
+
+            <div class="nutrient-section">
+                <h3>Proteins: The Building Blocks of Life</h3>
+                <p>Proteins are crucial for building, repairing, and maintaining almost all tissues and cells in your body. They are also involved in hormone production, enzyme function, and immune response.</p>
+                <img src="https://domf5oio6qrcr.cloudfront.net/medialibrary/14727/conversions/28e8e464-f55e-4b32-9bab-dc990d8cc927-thumb.jpg" alt="Grilled chicken and eggs representing proteins" class="nutrient-image">
+                <h4>Sources:</h4>
+                <ul>
+                    <li>**Animal-based:** Lean meats (chicken, beef), fish, eggs, dairy.</li>
+                    <li>**Plant-based:** Beans, lentils, tofu, nuts, seeds, quinoa.</li>
+                </ul>
+                <h4>Importance:</h4>
+                <ul>
+                    <li>Muscle growth and repair, especially after exercise.</li>
+                    <li>Production of hormones and enzymes.</li>
+                    <li>Supports a healthy immune system.</li>
+                    <li>Increases satiety, aiding in weight management.</li>
+                </ul>
+            </div>
+
+            <div class="nutrient-section">
+                <h3>Fats: Essential for Absorption and Protection</h3>
+                <p>Dietary fats are vital for absorbing fat-soluble vitamins (A, D, E, K), providing energy, insulating the body, and protecting vital organs. They also play a role in hormone production and cell membrane structure.</p>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf0u4WOR-Hej9mH5AnVpKMQgxbJhedUvvcQg&s" alt="Avocado, nuts, and olive oil representing healthy fats" class="nutrient-image">
+                <h4>Types & Sources:</h4>
+                <ul>
+                    <li>**Healthy Fats (Unsaturated):** Avocados, nuts, seeds, olive oil, fatty fish (salmon). These are beneficial for heart health.</li>
+                    <li>**Saturated Fats:** Found in red meat, butter, cheese. Consume in moderation.</li>
+                    <li>**Trans Fats:** Often found in processed foods. Avoid these as they are detrimental to health.</li>
+                </ul>
+                <h4>Importance:</h4>
+                <ul>
+                    <li>Aids absorption of essential vitamins.</li>
+                    <li>Provides concentrated energy.</li>
+                    <li>Supports brain health and nerve function.</li>
+                    <li>Crucial for hormone regulation.</li>
+                </ul>
+            </div>
+
+            <div class="nutrient-section">
+                <h3>Vitamins: Micronutrients for Body Functions</h3>
+                <p>Vitamins are organic compounds that your body needs in small amounts for a wide range of functions, including maintaining vision, boosting immunity, and helping with energy metabolism.</p>
+                <img src="https://images.squarespace-cdn.com/content/v1/58bf61ea3a041163d873b4e8/1587422396891-RMWS0B51RBVJ53YO2HCM/combisteam-queen-bakedsalmonwithvegetables.jpeg" alt="Colorful fruits and vegetables representing vitamins" class="nutrient-image">
+                <h4>Key Vitamins & Roles:</h4>
+                <ul>
+                    <li>**Vitamin A:** Good for vision, immune function. (Carrots, sweet potatoes)</li>
+                    <li>**B Vitamins:** Energy production, nerve function. (Whole grains, meat, eggs)</li>
+                    <li>**Vitamin C:** Immune support, skin health. (Citrus fruits, berries)</li>
+                    <li>**Vitamin D:** Bone health, immune function. (Sunlight, fortified milk, fatty fish)</li>
+                    <li>**Vitamin E:** Antioxidant, skin health. (Nuts, seeds, leafy greens)</li>
+                    <li>**Vitamin K:** Blood clotting, bone health. (Leafy green vegetables)</li>
+                </ul>
+            </div>
+
+            <div class="nutrient-section">
+                <h3>Minerals: Inorganic Essentials for Health</h3>
+                <p>Minerals are inorganic elements that originate from rocks, soil, and water, and are absorbed by plants and animals. They are essential for bone and tooth formation, fluid balance, muscle contraction, and nerve impulse transmission.</p>
+                <img src="https://static.toiimg.com/photo/69598494.cms" alt="Various foods rich in minerals like leafy greens, dairy, and fish" class="nutrient-image">
+                <h4>Key Minerals & Roles:</h4>
+                <ul>
+                    <li>**Calcium:** Strong bones and teeth, muscle function. (Dairy, leafy greens)</li>
+                    <li>**Iron:** Red blood cell formation, oxygen transport. (Red meat, spinach, beans)</li>
+                    <li>**Potassium:** Fluid balance, nerve signals, muscle contractions. (Bananas, potatoes, spinach)</li>
+                    <li>**Sodium:** Fluid balance, nerve function. (Table salt, processed foods - consume in moderation)</li>
+                    <li>**Magnesium:** Muscle and nerve function, blood sugar control. (Nuts, seeds, whole grains)</li>
+                    <li>**Zinc:** Immune function, wound healing. (Meat, beans, nuts)</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; padding-top: 10px;">
+                <label for="home-radio" class="go-back-btn">← Go Back to Home</label>
+            </div>
+        </div>
+
+        <div id="precaution-content" class="container">
+            <h2>Preventative Health Guidelines</h2>
+            <p class="intro">Adopting simple lifestyle changes can significantly lower the risk of chronic diseases. Use these guidelines for a healthier future.</p>
+
+            <div class="precaution-grid">
+                
+                <div class="precaution-card">
+                    <h3>General & Chronic Disease Precaution</h3>
+                    <ul>
+                        <li>Maintain a **healthy body weight** (BMI).</li>
+                        <li>Engage in **30 minutes of moderate exercise** most days.</li>
+                        <li>Prioritize **7-9 hours of quality sleep** nightly.</li>
+                        <li>Limit intake of processed foods and added sugars.</li>
+                        <li>**Quit smoking** and limit alcohol consumption.</li>
+                    </ul>
+                </div>
+                
+                <div class="precaution-card">
+                    <h3>Cancer Precaution</h3>
+                    <ul>
+                        <li>Eat a diet rich in **fruits, vegetables, and whole grains**.</li>
+                        <li>Protect your skin from excessive sun exposure.</li>
+                        <li>Get screened regularly based on age (e.g., mammograms, colonoscopy).</li>
+                        <li>Limit red and processed meat consumption.</li>
+                    </ul>
+                </div>
+                
+                <div class="precaution-card">
+                    <h3>High BP (Hypertension) & Sugar Precaution</h3>
+                    <ul>
+                        <li>Reduce **sodium (salt)** intake drastically.</li>
+                        <li>Consume foods rich in **potassium** (bananas, sweet potatoes).</li>
+                        <li>Control **portion sizes** of starchy and sugary foods.</li>
+                        <li>Maintain a regular exercise schedule to improve insulin sensitivity.</li>
+                    </ul>
+                </div>
+
+                <div class="precaution-card">
+                    <h3>Heart Stroke Precaution ❤️</h3>
+                    <ul>
+                        <li>Monitor and manage **blood pressure and cholesterol** levels.</li>
+                        <li>Limit consumption of saturated and trans fats.</li>
+                        <li>Maintain a healthy weight and avoid tobacco use.</li>
+                        <li>Learn the **F.A.S.T.** warning signs (Face drooping, Arm weakness, Speech difficulty, Time to call emergency).</li>
+                    </ul>
+                </div>
+                
+                <div class="precaution-card">
+                    <h3>Infectious Diseases (Dengue, Typhoid, Malaria)</h3>
+                    <ul>
+                        <li>Ensure proper **handwashing** before meals and after using the restroom (Typhoid).</li>
+                        <li>Drink **safe, filtered, or boiled water** only (Typhoid).</li>
+                        <li>Use **mosquito repellent** and wear protective clothing (Dengue, Malaria).</li>
+                        <li>Eliminate stagnant water sources around your home to prevent mosquito breeding.</li>
+                    </ul>
+                </div>
+                
+                <div class="precaution-card">
+                    <h3>Asthma Precaution 💨</h3>
+                    <ul>
+                        <li>Identify and **avoid personal triggers** (dust, pollen, pet dander).</li>
+                        <li>Keep the home clean and use air filters if possible.</li>
+                        <li>Follow your prescribed **Asthma Action Plan**.</li>
+                        <li>Regular exercise is encouraged, but use an inhaler before if advised by a doctor.</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div style="text-align: center; padding-top: 10px;">
+                <label for="home-radio" class="go-back-btn">← Go Back to Calculator</label>
+            </div>
+        </div>
+
+        <div id="about-content" class="container">
+            <h2>Meet the ALPHAFIT-360 Team</h2>
+            <p class="intro">We are a passionate group dedicated to empowering your fitness journey with personalized plans and expert guidance. Get to know the faces behind our vision!</p>
+
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="https://example.com/team-member-1.jpg" alt="Photo of MD.Athiq Ahmed" class="member-photo"> 
+                    <h3>MD.Athiq Ahmed</h3>
+                    <p class="role">Founder & CEO</p>
+                    <p class="bio">Athiq envisioned ALPHAFIT-360 to make personalized fitness accessible to everyone, combining technology with health expertise. He's a marathon enthusiast and fitness tech innovator.</p>
+                </div>
+
+                <div class="team-member">
+                    <img src="https://example.com/team-member-2.jpg" alt="Photo of S.Sumanth Kumar" class="member-photo"> 
+                    <h3>S.Sumanth Kumar</h3>
+                    <p class="role">Lead Dietitian</p>
+                    <p class="bio">Sumanth brings years of experience in nutritional science, crafting balanced and delicious meal plans. His passion is helping users build sustainable, healthy eating habits.</p>
+                </div>
+
+                <div class="team-member">
+                    <img src="https://example.com/team-member-3.jpg" alt="Photo of T.V.Jashwanth" class="member-photo"> 
+                    <h3>T.V.Jashwanth</h3>
+                    <p class="role">Head Fitness Trainer</p>
+                    <p class="bio">Jashwanth designs dynamic and effective workout routines for all levels. With a background in sports science, he focuses on injury prevention and maximizing performance.</p>
+                </div>
+
+                <div class="team-member">
+                    <img src="https://example.com/team-member-4.jpg" alt="Photo of SK.Nissar Ahmed" class="member-photo"> 
+                    <h3>SK.Nissar Ahmed</h3>
+                    <p class="role">Community Manager</p>
+                    <p class="bio">Nissar fosters our vibrant community, providing support and motivation. He believes in the power of collective goals and celebrating every step of your fitness journey.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; padding-top: 10px;">
+                <label for="home-radio" class="go-back-btn">← Go Back to Home</label>
+            </div>
+        </div>
+
+        <div id="workout-content" class="container">
+            <h2>Comprehensive Workout Guide 💪</h2>
+            <p class="intro">Unlock your full potential with targeted exercises for every major muscle group. Whether you're a beginner or a seasoned athlete, these routines will help you build strength, improve endurance, and sculpt your body. Remember to warm up, listen to your body, and progress at your own pace!</p>
+
+            <!-- Chest Section -->
+            <div class="workout-section">
+                <h3>Chest: Power Your Upper Body</h3>
+                <p class="intro">A strong chest enhances posture, boosts pushing power, and gives you that defined upper body look. Focus here to improve overall upper body strength and functional movement.</p>
+                <iframe src="https://res.cloudinary.com/dfpjpr4an/video/upload/v1766988922/CHEST_DAY_W__CBUM_-_Hany_Rambod_720p_h264_cctcr6.mp4" title="The Best And Worst Chest Exercises (Ranked By Science)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%; height:315px; border-radius:8px; box-shadow:0 0 10px rgba(0,198,255,0.4); margin-bottom:15px;"></iframe>
+                <h4>Effective Exercises:</h4>
+                <ul>
+                    <li><strong>Push-Ups:</strong> A classic bodyweight move that targets the chest, shoulders, and triceps. Start in a plank position, lower your body until your chest nearly touches the ground, then push back up.</li>
+                    <li><strong>Bench Press (Barbell or Dumbbell):</strong> Lie on a bench and press weights upward from chest level. Great for building mass and strength in the pectorals.</li>
+                    <li><strong>Chest Flyes (Dumbbell or Cable):</strong> With weights in hand, open your arms wide in a hugging motion to isolate the chest muscles and improve stretch and contraction.</li>
+                    <li><strong>Incline Push-Ups or Dips:</strong> Elevate your feet for incline push-ups or use parallel bars for dips to hit the upper chest and build stability.</li>
+                </ul>
+                
+                <h4>Variations by Level:</h4>
+                <ul class="variations">
+                    <li><strong>Beginner:</strong> Wall push-ups or knee push-ups to reduce intensity and build form.</li>
+                    <li><strong>Intermediate:</strong> Standard push-ups with a 3-second pause at the bottom for added tension.</li>
+                    <li><strong>Advanced:</strong> Weighted dips or decline push-ups with a clap for explosive power.</li>
+                </ul>
+                
+                <div class="tips">
+                    <h4>Tips for Proper Form & Injury Prevention:</h4>
+                    <ul>
+                        <li>Keep your core engaged and body in a straight line to avoid arching your back.</li>
+                        <li>Breathe out during the exertion phase (pushing up) and in on the way down.</li>
+                        <li>Warm up with light cardio and stretches; stop if you feel shoulder strain and consult a trainer.</li>
+                        <li>Use a full range of motion but don't lock your elbows to protect joints.</li>
+                    </ul>
+                </div>
+                
+                <p class="motivational">Every rep brings you closer to a stronger chest—track your progress weekly and celebrate those gains. Consistency turns effort into results!</p>
+            </div>
+
+            <!-- Back Section -->
+            <div class="workout-section">
+                <h3>Back: Build a Strong Foundation</h3>
+                <p class="intro">Your back muscles support posture, protect your spine, and power pulling movements. Strengthening here reduces injury risk and creates a balanced, V-shaped physique.</p>
+                <iframe src="https://www.youtube.com/embed/jLvqKgW-_G8" title="The Best And Worst Chest Exercises (Ranked By Science)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%; height:315px; border-radius:8px; box-shadow:0 0 10px rgba(0,198,255,0.4); margin-bottom:15px;"></iframe>
+                <h4>Effective Exercises:</h4>
+                <ul>
+                    <li><strong>Pull-Ups or Assisted Pull-Ups:</strong> Hang from a bar and pull your body up until your chin passes it. Targets lats, traps, and rhomboids for width and strength.</li>
+                    <li><strong>Rows (Bent-Over or Seated Cable):</strong> Pull weights toward your torso while hinged at the hips or seated. Excellent for mid-back thickness and posture improvement.</li>
+                    <li><strong>Deadlifts:</strong> Lift a barbell from the ground to hip level with a flat back. Builds overall back power and grip strength.</li>
+                    <li><strong>Lat Pulldowns:</strong> Pull a bar down to your chest while seated. A great alternative to pull-ups for beginners.</li>
+                    <li><strong>Superman Holds:</strong> Lie face down and lift arms and legs off the ground. Bodyweight move for lower back stability.</li>
+                </ul>
+                
+                <h4>Variations by Level:</h4>
+                <ul class="variations">
+                    <li><strong>Beginner:</strong> Inverted rows using a low bar or resistance bands for assisted pull-ups.</li>
+                    <li><strong>Intermediate:</strong> Single-arm dumbbell rows with controlled tempo.</li>
+                    <li><strong>Advanced:</strong> Weighted pull-ups or rack pulls for heavier loads.</li>
+                </ul>
+                
+                <div class="tips">
+                    <h4>Tips for Proper Form & Injury Prevention:</h4>
+                    <ul>
+                        <li>Squeeze your shoulder blades together on pulls to engage the back fully.</li>
+                        <li>Avoid rounding your back—keep it neutral to prevent strains.</li>
+                        <li>Start with lighter weights to master form; incorporate mobility work for shoulders and hips.</li>
+                        <li>Rest 48 hours between back sessions to allow recovery.</li>
+                    </ul>
+                </div>
+                
+                <p class="motivational">A powerful back isn't built overnight, but with steady pulls and patience, you'll stand taller and stronger. Log your sets and watch your transformation unfold!</p>
+            </div>
+
+            <!-- Biceps Section -->
+            <div class="workout-section">
+                <h3>Biceps: Sculpt Your Arms</h3>
+                <p class="intro">Biceps add definition to your arms and assist in everyday pulling tasks. Targeting them helps create balanced arm development and boosts confidence in sleeveless season.</p>
+                <iframe src="https://www.youtube.com/embed/GNO4OtYoCYk" title="The Best And Worst Chest Exercises (Ranked By Science)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%; height:315px; border-radius:8px; box-shadow:0 0 10px rgba(0,198,255,0.4); margin-bottom:15px;"></iframe>
+                <h4>Effective Exercises:</h4>
+                <ul>
+                    <li><strong>Bicep Curls (Dumbbell or Barbell):</strong> Stand with weights at your sides and curl them up to shoulder level. Isolates the biceps for peak contraction.</li>
+                    <li><strong>Hammer Curls:</strong> Curl with palms facing inward to hit the brachialis and forearms alongside biceps.</li>
+                    <li><strong>Concentration Curls:</strong> Seated, curl one arm at a time with elbow on thigh for focused isolation.</li>
+                    <li><strong>Chin-Ups:</strong> Pull-ups with underhand grip to engage biceps heavily in a compound move.</li>
+                </ul>
+                
+                <h4>Variations by Level:</h4>
+                <ul class="variations">
+                    <li><strong>Beginner:</strong> Seated bicep curls with light weights or no weights (isometric holds).</li>
+                    <li><strong>Intermediate:</strong> Alternating curls with a slow eccentric (lowering) phase.</li>
+                    <li><strong>Advanced:</strong> 21s (7 partial up, 7 partial down, 7 full curls) for intensity.</li>
+                </ul>
+                
+                <div class="tips">
+                    <h4>Tips for Proper Form & Injury Prevention:</h4>
+                    <ul>
+                        <li>Don't swing your body—use controlled movements to avoid elbow strain.</li>
+                        <li>Keep elbows tucked to your sides and wrists straight.</li>
+                        <li>Warm up elbows and wrists; if you feel pain, reduce weight and focus on form.</li>
+                        <li>Balance with tricep work to prevent imbalances.</li>
+                    </ul>
+                </div>
+                
+                <p class="motivational">Flex those gains—small, consistent curls lead to big arm results. Track your curl weight over time and feel the power building!</p>
+            </div>
+
+            <!-- Triceps Section -->
+            <div class="workout-section">
+                <h3>Triceps: The Arm's Powerhouse</h3>
+                <p class="intro">Triceps make up two-thirds of your arm size and are key for pushing strength. Strong triceps enhance pressing movements and give your arms a toned, full look.</p>
+                <iframe src="https://www.youtube.com/embed/OpRMRhr0Ycc" title="The Best And Worst Chest Exercises (Ranked By Science)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%; height:315px; border-radius:8px; box-shadow:0 0 10px rgba(0,198,255,0.4); margin-bottom:15px;"></iframe>
+                <h4>Effective Exercises:</h4>
+                <ul>
+                    <li><strong>Tricep Dips (Bench or Parallel Bars):</strong> Lower your body by bending elbows, then push up. Targets all three tricep heads.</li>
+                    <li><strong>Overhead Tricep Extensions:</strong> Hold a weight overhead and lower it behind your head. Great for long-head emphasis.</li>
+                    <li><strong>Tricep Pushdowns (Cable):</strong> Push a bar down while keeping elbows fixed. Isolates the triceps effectively.</li>
+                    <li><strong>Close-Grip Bench Press:</strong> Bench press with hands close together to shift focus to triceps.</li>
+                </ul>
+                
+                <h4>Variations by Level:</h4>
+                <ul class="variations">
+                    <li><strong>Beginner:</strong> Bench dips with feet on the floor.</li>
+                    <li><strong>Intermediate:</strong> Skull crushers (lying extensions) with EZ bar.</li>
+                    <li><strong>Advanced:</strong> Weighted dips or diamond push-ups for extra challenge.</li>
+                </ul>
+                
+                <div class="tips">
+                    <h4>Tips for Proper Form & Injury Prevention:</h4>
+                    <ul>
+                        <li>Keep elbows pointing back, not flaring out, to protect shoulders.</li>
+                        <li>Use a full range but avoid hyperextending elbows.</li>
+                        <li>Start light to build endurance; stretch after to maintain flexibility.</li>
+                        <li>Pair with bicep work for arm balance.</li>
+                    </ul>
+                </div>
+                
+                <p class="motivational">Push through the burn—your triceps are ready to grow. Measure your arm progress monthly and stay motivated by those visible changes!</p>
+            </div>
+
+            <!-- Shoulders Section -->
+            <div class="workout-section">
+                <h3>Shoulders: Reach New Heights</h3>
+                <p class="intro">Broad shoulders create a powerful silhouette and improve overhead mobility. Strengthening them supports daily activities and prevents imbalances from chest-focused work.</p>
+                <iframe src="https://www.youtube.com/embed/SgyUoY0IZ7A" title="The Best And Worst Chest Exercises (Ranked By Science)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%; height:315px; border-radius:8px; box-shadow:0 0 10px rgba(0,198,255,0.4); margin-bottom:15px;"></iframe>
+                <h4>Effective Exercises:</h4>
+                <ul>
+                    <li><strong>Overhead Press (Dumbbell or Barbell):</strong> Press weights from shoulder height overhead. Builds overall shoulder strength.</li>
+                    <li><strong>Lateral Raises:</strong> Lift weights out to the sides to target side delts for width.</li>
+                    <li><strong>Front Raises:</strong> Lift weights forward to hit the front delts.</li>
+                    <li><strong>Rear Delt Flyes:</strong> Bend forward and raise weights backward for posterior delt balance.</li>
+                    <li><strong>Upright Rows:</strong> Pull a barbell up to chin level to engage traps and side delts.</li>
+                </ul>
+                
+                <h4>Variations by Level:</h4>
+                <ul class="variations">
+                    <li><strong>Beginner:</strong> Seated dumbbell presses with light weights.</li>
+                    <li><strong>Intermediate:</strong> Arnold presses (rotating motion) for full delt activation.</li>
+                    <li><strong>Advanced:</strong> Handstand push-ups or heavy military presses.</li>
+                </ul>
+                
+                <div class="tips">
+                    <h4>Tips for Proper Form & Injury Prevention:</h4>
+                    <ul>
+                        <li>Lead with elbows, not hands, on raises to avoid impingement.</li>
+                        <li>Don't shrug shoulders—keep them down for clean movement.</li>
+                        <li>Warm up rotator cuffs with bands; rest if you feel shoulder pain.</li>
+                        <li>Balance all three delt heads to prevent posture issues.</li>
+                    </ul>
+                </div>
+                
+                <p class="motivational">Elevate your shoulders and your confidence—steady presses lead to capped delts. Track shoulder width and embrace the broad transformation!</p>
+            </div>
+
+            <!-- Legs Section -->
+            <div class="workout-section">
+                <h3>Legs: The Base of Your Strength</h3>
+                <p class="intro">Legs power your entire body, from running to lifting. Building them boosts metabolism, stability, and athletic performance while preventing lower body imbalances.</p>
+                <iframe src="https://www.youtube.com/embed/8zWDuWKdBZU" title="The Best And Worst Chest Exercises (Ranked By Science)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%; height:315px; border-radius:8px; box-shadow:0 0 10px rgba(0,198,255,0.4); margin-bottom:15px;"></iframe>
+                <h4>Effective Exercises:</h4>
+                <ul>
+                    <li><strong>Squats (Bodyweight, Goblet, or Barbell):</strong> Lower as if sitting back into a chair, then stand. Targets quads, glutes, and hamstrings.</li>
+                    <li><strong>Lunges (Walking or Reverse):</strong> Step forward or backward and lower until knees are at 90 degrees. Builds unilateral strength and balance.</li>
+                    <li><strong>Deadlifts (Romanian or Conventional):</strong> Hinge at hips to lift weights, focusing on hamstrings and glutes.</li>
+                    <li><strong>Leg Press:</strong> Push a weighted platform away with your feet. Great for quad emphasis in a machine.</li>
+                    <li><strong>Calf Raises:</strong> Rise onto toes with or without weights for lower leg development.</li>
+                </ul>
+                
+                <h4>Variations by Level:</h4>
+                <ul class="variations">
+                    <li><strong>Beginner:</strong> Bodyweight squats or assisted lunges holding a wall.</li>
+                    <li><strong>Intermediate:</strong> Bulgarian split squats for added challenge.</li>
+                    <li><strong>Advanced:</strong> Pistol squats or heavy front squats.</li>
+                </ul>
+                
+                <div class="tips">
+                    <h4>Tips for Proper Form & Injury Prevention:</h4>
+                    <ul>
+                        <li>Knees track over toes; don't let them cave in.</li>
+                        <li>Engage core and keep back straight to protect spine.</li>
+                        <li>Warm up with dynamic stretches; use knee sleeves if needed.</li>
+                        <li>Train legs 2x/week with recovery days in between.</li>
+                    </ul>
+                </div>
+                
+                <p class="motivational">Leg day builds the foundation for total body power—push through the burn and track your squat depth. Strong legs, strong you!</p>
+            </div>
+
+            <!-- Core/Abs Section -->
+            <div class="workout-section">
+                <h3>Core/Abs: Ignite Your Center</h3>
+                <p class="intro">A solid core stabilizes your body, improves balance, and enhances every movement. It's not just about aesthetics—strong abs protect your spine and boost performance.</p>
+                <iframe src="https://www.youtube.com/embed/Tn-XvYG9x7w" title="The Best And Worst Chest Exercises (Ranked By Science)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%; height:315px; border-radius:8px; box-shadow:0 0 10px rgba(0,198,255,0.4); margin-bottom:15px;"></iframe>
+                <h4>Effective Exercises:</h4>
+                <ul>
+                    <li><strong>Planks:</strong> Hold a forearm plank position, engaging core to stay straight. Builds endurance in abs and obliques.</li>
+                    <li><strong>Crunches or Sit-Ups:</strong> Curl your upper body toward knees. Targets upper abs for definition.</li>
+                    <li><strong>Russian Twists:</strong> Sit and twist side to side with or without weight. Hits obliques for rotational strength.</li>
+                    <li><strong>Leg Raises or Hanging Knee Raises:</strong> Lift legs toward chest while hanging or lying down. Focuses on lower abs.</li>
+                    <li><strong>Bicycle Crunches:</strong> Alternate elbow to opposite knee in a pedaling motion for full core engagement.</li>
+                </ul>
+                
+                <h4>Variations by Level:</h4>
+                <ul class="variations">
+                    <li><strong>Beginner:</strong> Knee planks or modified crunches on the floor.</li>
+                    <li><strong>Intermediate:</strong> Side planks with hip dips for obliques.</li>
+                    <li><strong>Advanced:</strong> Dragon flags or weighted cable crunches.</li>
+                </ul>
+                
+                <div class="tips">
+                    <h4>Tips for Proper Form & Injury Prevention:</h4>
+                    <ul>
+                        <li>Exhale on the contraction and avoid pulling on your neck.</li>
+                        <li>Focus on quality over quantity—slow, controlled reps.</li>
+                        <li>Incorporate into every workout; stretch to prevent tightness.</li>
+                        <li>Combine with cardio for visible abs (diet plays a big role!).</li>
+                    </ul>
+                </div>
+                
+                <p class="motivational">Core strength is the key to unlocking your best self—hold that plank a little longer each time. Track your hold times and feel the stability grow!</p>
+            </div>
+
+            <div style="text-align: center; padding-top: 10px;">
+                <label for="home-radio" class="go-back-btn">← Go Back to Home</label>
+            </div>
+        </div>
+
+        <div id="game-content" class="container">
+            <div class="game-container">
+                <h1>Secret Weight Challenge ⚖️</h1>
+                <h2>Can you guess the safe weight range?</h2>
+                <p>Enter a weight (in kg) to find the *safe* number!</p>
+                <p>(Hint: It's between 1 and 100 kg)</p>
+                <input type="number" id="weightInput" placeholder="Enter weight (e.g., 75)">
+                <button onclick="checkWeight()">Check Weight</button>
+                <p id="message"></p>
+            </div>
+        </div> 
+    </div>
+    <footer>
+        <p>&copy; 2024 ALPHAFIT-360. All rights reserved. | Health is Wealth.</p>
+    </footer>
+</body>
+</html>
